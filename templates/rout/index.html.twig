@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RoutDemonstrationController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+    <form action="/rout/show-input-text" method="get">
+        <label for="word">Please input some word:</label>
+        <input type="text" id="word" name="word">
+        <input type="submit" value="Show the input word">
+    </form>
+    <p>Link to <a href="/">MainController</a></p>
+</div>
+{% endblock %}
