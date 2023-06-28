@@ -26,6 +26,9 @@
             "migrations/.gitignore"
         ]
     },
+    "eonx-com/easy-random": {
+        "version": "4.3.33"
+    },
     "phpunit/phpunit": {
         "version": "9.6",
         "recipe": {
