@@ -26,6 +26,7 @@ class UrlOperator
      * @param string $url
      * @return string
      * @throws GuzzleException
+     * @throws \Exception
      */
     public function getUrlCode(string $url): string
     {

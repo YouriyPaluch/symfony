@@ -5,7 +5,6 @@ namespace App\Coder;
 use EonX\EasyRandom\RandomGenerator;
 use App\Coder\Interfaces\IUrlEncoder;
 use App\Coder\Interfaces\IUrlStorage;
-use InvalidArgumentException;
 
 class UrlEncoder implements IUrlEncoder
 {
@@ -23,8 +22,8 @@ class UrlEncoder implements IUrlEncoder
 
     /**
      * @param string $url
-     * @throws InvalidArgumentException
      * @return string
+     * @throws \Exception
      */
     public function encode(string $url): string
     {
