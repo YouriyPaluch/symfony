@@ -39,7 +39,12 @@ class UrlEncoder implements IUrlEncoder
                 'url' => $url,
                 'code' => $code
             ];
-            $this->storage->saveEntity($data);
+            try {
+                $this->storage->saveEntity($data);
+            } catch (\Exception $e) {
+                throw new \Exception('Something went wrong. ' . $e->getMessage());
+            }
+
         }
         return $code;
     }

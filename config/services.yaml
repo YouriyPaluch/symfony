@@ -24,3 +24,7 @@ services:
     # please note that last definitions always *replace* previous ones
     GuzzleHttp\ClientInterface:
         class: GuzzleHttp\Client
+    Monolog\Logger:
+        class: Monolog\Logger
+        arguments:
+            $name: 'coder'

@@ -31,7 +31,7 @@ class UrlOperator
     {
         $this->validator->isWorking($url);
         $code = $this->encoder->encode($url);
-        return 'This URL has a code. Code: ' . $code;
+        return 'This URL: ' . $url . ' has a code. Code: ' . $code;
     }
 
     /**
@@ -51,7 +51,7 @@ class UrlOperator
     public function startApplication(string $string): string
     {
         if (empty($string)) {
-            $result = 'Ви не ввели жодних данних';
+            $result = 'You nothing input';
         } elseif (str_starts_with($string, 'http')) {
             $result = $this->getUrlCode($string);
         } else {
