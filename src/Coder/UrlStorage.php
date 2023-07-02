@@ -2,6 +2,7 @@
 
 namespace App\Coder;
 
+use App\Coder\Exceptions\EntityNotSaveException;
 use App\Coder\Interfaces\IUrlStorage;
 use App\Entity\UrlCoderEntity;
 use App\Repository\UrlCoderEntityRepository;
@@ -18,18 +19,16 @@ class UrlStorage implements IUrlStorage
 
     /**
      * @param array $data
-     * @return bool
+     * @return void
      */
-    public function saveEntity(array $data): bool
+    public function saveEntity(array $data): void
     {
         try {
             $entity = UrlCoderEntity::createFromArray($data);
             $this->urlCodeRepo->save($entity, true);
-            $result = true;
         } catch (\Throwable) {
-            $result = false;
+            throw new EntityNotSaveException();
         }
-        return $result;
     }
 
     /**
@@ -59,7 +58,7 @@ class UrlStorage implements IUrlStorage
     {
         try {
             $data = $this->urlCodeRepo->findOneBy($criteria)->{$method}();
-        } catch (\Throwable $e) {
+        } catch (\Throwable) {
             throw new \InvalidArgumentException('Searching data: ' . json_encode($criteria));
         }
         return $data;
