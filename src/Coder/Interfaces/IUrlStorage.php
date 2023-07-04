@@ -2,6 +2,8 @@
 
 namespace App\Coder\Interfaces;
 
+use Exception;
+
 interface IUrlStorage {
 
 	/**
@@ -16,9 +18,10 @@ interface IUrlStorage {
 	 */
 	public function getUrlByCode(string $code): string;
 
-	/**
-	 * @param array $data
-	 * @return bool
-	 */
-	public function saveEntity(array $data): bool;
+    /**
+     * @param array $data
+     * @return void
+     * @throws Exception
+     */
+	public function saveEntity(array $data): void;
 }

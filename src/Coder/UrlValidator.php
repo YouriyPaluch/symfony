@@ -2,10 +2,10 @@
 
 namespace App\Coder;
 
+use App\Coder\Exceptions\NotUrlException;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\GuzzleException;
-use InvalidArgumentException;
 
 class UrlValidator
 {
@@ -25,7 +25,7 @@ class UrlValidator
     public function isUrl(string $url): bool
     {
         if (empty($url) || !filter_var($url, FILTER_VALIDATE_URL)) {
-            throw new InvalidArgumentException('Url is not valid');
+            throw new NotUrlException('Url - ' . $url . ' is invalid');
         }
         return true;
     }
@@ -45,7 +45,7 @@ class UrlValidator
             $response = $this->client->request('GET', $url);
             return (!empty($response->getStatusCode()) && in_array($response->getStatusCode(), $allowCodes));
         } catch (ConnectException $e) {
-            throw new \Exception('Url ' . $url . ' was not have working connection');
+            throw new $e('Url ' . $url . ' was not have working connection');
         }
     }
 }

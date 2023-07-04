@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Coder\UrlOperator;
-use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

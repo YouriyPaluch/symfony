@@ -2,6 +2,8 @@
 
 namespace App\Coder;
 
+use App\Coder\Exceptions\DataNotFoundInDBException;
+use App\Coder\Exceptions\NotUrlException;
 use GuzzleHttp\Exception\GuzzleException;
 use App\Coder\Interfaces\IUrlStorage;
 
@@ -51,12 +53,15 @@ class UrlOperator
      */
     public function startApplication(string $string): string
     {
-        if (empty($string)) {
-            $result = 'You nothing input';
-        } elseif (str_starts_with($string, 'http')) {
+        try {
+            $this->validator->isUrl($string);
             $result = $this->getUrlCode($string);
-        } else {
-            $result = $this->getUrl($string);
+        } catch (NotUrlException $urlException) {
+            try {
+                $result = $this->getUrl($string);
+            } catch (DataNotFoundInDBException $e) {
+                $result = 'You input invalid data. ' . $urlException->getMessage() . '; ' . $e->getMessage();
+            }
         }
         return $result;
     }

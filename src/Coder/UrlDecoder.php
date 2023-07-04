@@ -3,6 +3,7 @@
 namespace App\Coder;
 
 
+use App\Coder\Exceptions\DataNotFoundInDBException;
 use App\Coder\Interfaces\IUrlDecoder;
 use App\Coder\Interfaces\IUrlStorage;
 use InvalidArgumentException;
@@ -27,8 +28,8 @@ class UrlDecoder implements IUrlDecoder
     {
         try {
             return $this->storage->getUrlByCode($code);
-        } catch (InvalidArgumentException $e) {
-            throw new InvalidArgumentException('Url was not found in DB. Exception message: ' . $e->getMessage());
+        } catch (InvalidArgumentException) {
+            throw new DataNotFoundInDBException('Code - ' . $code . ' was not found in DB.');
         }
      }
 }

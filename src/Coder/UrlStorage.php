@@ -20,6 +20,7 @@ class UrlStorage implements IUrlStorage
     /**
      * @param array $data
      * @return void
+     * @throws EntityNotSaveException
      */
     public function saveEntity(array $data): void
     {
