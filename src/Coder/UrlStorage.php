@@ -26,7 +26,7 @@ class UrlStorage implements IUrlStorage
     {
         try {
             $entity = UrlCoderEntity::createFromArray($data);
-            $this->urlCodeRepo->save($entity, true);
+            $this->urlCodeRepo->save($entity);
         } catch (\Throwable) {
             throw new EntityNotSaveException();
         }

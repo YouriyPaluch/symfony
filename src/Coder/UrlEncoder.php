@@ -30,20 +30,30 @@ class UrlEncoder implements IUrlEncoder
         try {
             $code = $this->storage->getCodeByUrl($url);
         } catch (\Exception) {
-            $code = $this->randomGenerator
-                ->randomString($this->lengthCode)
-                ->userFriendly()
-                ->__toString();
-            $data = [
-                'url' => $url,
-                'code' => $code
-            ];
-            try {
-                $this->storage->saveEntity($data);
-            } catch (\Exception $e) {
-                throw new \Exception('Something went wrong. ' . $e->getMessage());
-            }
+            $code = $this->generateCode($url);
+        }
+        return $code;
+    }
 
+    /**
+     * @param string $url
+     * @return string
+     * @throws \Exception
+     */
+    public function generateCode(string $url): string
+    {
+        $code = $this->randomGenerator
+            ->randomString($this->lengthCode)
+            ->userFriendly()
+            ->__toString();
+        $data = [
+            'url' => $url,
+            'code' => $code
+        ];
+        try {
+            $this->storage->saveEntity($data);
+        } catch (\Exception $e) {
+            throw new \Exception('Something went wrong. ' . $e->getMessage());
         }
         return $code;
     }

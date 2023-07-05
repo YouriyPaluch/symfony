@@ -30,10 +30,10 @@ class UrlOperator
      * @throws GuzzleException
      * @throws \Exception
      */
-    public function getUrlCode(string $url): string
+    public function getCode(string $url, bool $nonUnique): string
     {
         $this->validator->isWorking($url);
-        $code = $this->encoder->encode($url);
+        $code = $nonUnique ? $this->encoder->generateCode($url) : $this->encoder->encode($url);
         return 'This URL: ' . $url . ' has a code. Code: ' . $code;
     }
 
@@ -48,14 +48,15 @@ class UrlOperator
 
     /**
      * @param string $string
+     * @param bool $nonUnique
      * @return string
      * @throws GuzzleException
      */
-    public function startApplication(string $string): string
+    public function startApplication(string $string, bool $nonUnique): string
     {
         try {
             $this->validator->isUrl($string);
-            $result = $this->getUrlCode($string);
+            $result = $this->getCode($string, $nonUnique);
         } catch (NotUrlException $urlException) {
             try {
                 $result = $this->getUrl($string);

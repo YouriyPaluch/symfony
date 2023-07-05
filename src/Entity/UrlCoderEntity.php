@@ -14,6 +14,9 @@ class UrlCoderEntity
     #[ORM\Column]
     private int $id;
 
+    #[ORM\Column(type: 'integer', length: 6, options: ['default' => 0])]
+    private int $counter = 0;
+
     public function __construct(
         #[ORM\Column(length: 255)]
         protected string $url,
@@ -42,5 +45,27 @@ class UrlCoderEntity
             throw new \InvalidArgumentException();
         }
         return new static($data['url'], $data['code']);
+    }
+
+    /**
+     * @return int
+     */
+    public function getCounter(): int {
+        return $this->counter;
+    }
+
+
+    public function incrementCounter(): void
+    {
+        $this->counter++;
+    }
+
+
+    public function toString(): string
+    {
+        return 'ID: ' . $this->getId() . '<br>'
+            . 'URL: ' . $this->getUrl() . '<br>'
+            . 'Code: ' . $this->getCode() . '<br>'
+            . 'Count redirect: ' . $this->getCounter();
     }
 }

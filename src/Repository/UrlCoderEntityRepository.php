@@ -21,9 +21,11 @@ class UrlCoderEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, UrlCoderEntity::class);
     }
 
-    public function save(UrlCoderEntity $entity, bool $flush = false): void
+    public function save(UrlCoderEntity $entity = null, bool $flush = true): void
     {
-        $this->getEntityManager()->persist($entity);
+        if (!is_null($entity)) {
+            $this->getEntityManager()->persist($entity);
+        }
 
         if ($flush) {
             $this->getEntityManager()->flush();
@@ -39,28 +41,4 @@ class UrlCoderEntityRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return UrlCoderEntity[] Returns an array of UrlCoderEntity objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('u.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?UrlCoderEntity
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }
