@@ -78,7 +78,6 @@ class UrlCoderController extends AbstractController
         UrlCoderEntity $urlCoderEntity
     ): Response
     {
-//        return new Response($urlCoderEntity->toString());
         return $this->render('url_coder/item-statistics.html.twig', [
             'urlCode' => $urlCoderEntity,
         ]);
