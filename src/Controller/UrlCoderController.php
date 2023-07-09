@@ -5,13 +5,14 @@ namespace App\Controller;
 use App\Coder\UrlOperator;
 use App\Entity\UrlCoderEntity;
 use App\Services\UrlService;
+use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/url-coder', name: 'app_url_coder')]
+#[Route('/url-coder')]
 class UrlCoderController extends AbstractController
 {
     const URL = 'url';
@@ -25,10 +26,14 @@ class UrlCoderController extends AbstractController
     {
     }
 
-    #[Route('/', name: 'url_coder')]
-    public function index(): Response
+    #[Route('/', name: 'url_coder_index', methods: 'GET')]
+    public function index(EntityManagerInterface $em): Response
     {
-        return $this->render('url_coder/index.html.twig');
+        $repo = $em->getRepository(UrlCoderEntity::class);
+        $urlCoderList = $repo->findAll();
+        return $this->render('url_coder/index.html.twig', [
+            'urlCodeList' => $urlCoderList
+        ]);
     }
 
     #[Route('/get-data', name: 'url_coder_get_data', methods: 'POST')]
@@ -59,5 +64,23 @@ class UrlCoderController extends AbstractController
     public function statisticsAction(UrlCoderEntity $urlCoderEntity): Response
     {
         return new Response($urlCoderEntity->toString());
+    }
+
+    #[Route('/add-new', name: 'url_coder_add_new')]
+    public function addNew(): Response
+    {
+        return $this->render('url_coder/add-new.html.twig');
+    }
+
+    #[Route('/{id}', name:'url_coder_item_info', requirements: ['id' => '\d+'], methods: 'GET')]
+    public function itemInfo(
+        int $id,
+        UrlCoderEntity $urlCoderEntity
+    ): Response
+    {
+//        return new Response($urlCoderEntity->toString());
+        return $this->render('url_coder/item-statistics.html.twig', [
+            'urlCode' => $urlCoderEntity,
+        ]);
     }
 }

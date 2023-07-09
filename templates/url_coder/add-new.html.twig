@@ -1,0 +1,25 @@
+{% extends 'url_coder/index.html.twig' %}
+
+{% block title %}Add new {{ parent() }}{% endblock %}
+{% block breadcrumb %}<a href="{{ path("url_coder_index") }}">{{ parent() }}</a>/Add new{% endblock %}
+{% block contentContainer %}
+    <div class="example-wrapper">
+        <h1>Add new or get URL</h1>
+        <form action="/url-coder/get-data" method="post">
+            <div>
+                <label for="url">Please input url:</label>
+                <input type="text" id="url" name="url">
+                <input type="submit" value="Get code">
+            </div>
+            <div>
+                <label for="code">Please input code:</label>
+                <input type="text" id="code" name="code">
+                <input type="submit" value="Get url">
+            </div>
+            <div>
+                <label for="non_unique">Non unique code</label>
+                <input type="checkbox" id="non_unique" name="non_unique">
+            </div>
+        </form>
+    </div>
+{% endblock %}
