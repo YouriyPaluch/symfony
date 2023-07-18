@@ -10,6 +10,6 @@
         <li>Redirection count: {{ urlCode.counter }}</li>
         <li>Url for share: <span id="link-to-copy-{{ urlCode.id }}">{{ app.request.getSchemeAndHttpHost() }}{{ path('url_coder_index') }}{{ urlCode.code }}</span></li>
     </ul>
-    <button type="button" class="btn btn-success" onclick="copyText({{ urlCode.id }})">Copy</button>
+    <button type="button" class="btn btn-success" onclick="copyText({{ urlCode.id }})">Copy short url</button>
     <a href="{{ path('url_coder_remove', {id: urlCode.id }) }}" class="btn btn-danger">Remove url</a>
 {% endblock %}

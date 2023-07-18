@@ -44,9 +44,7 @@ class UrlCoderController extends AbstractController
         $nonUnique = (bool) $request->get(self::NON_UNIQUE);
         try {
             $data = $this->urlOperator->startApplication($requestData, $nonUnique);
-            $repo = $em->getRepository(UrlCoderEntity::class);
-            /** @var UrlCoderEntity $urlCoder */
-            $urlCoder = $repo->findOneBy(['code' => $data, 'user' => $this->getUser()]);
+            $urlCoder = $this->urlService->getEntityByCode($data);
             return $this->redirectToRoute('url_coder_item_info', ['id' => $urlCoder->getId()]);
         } catch (\Exception|GuzzleException|\Error $e) {
             $data = $e->getMessage();
@@ -74,6 +72,12 @@ class UrlCoderController extends AbstractController
     public function addNew(): Response
     {
         return $this->render('url_coder/add-new.html.twig');
+    }
+
+    #[Route('/get-url', name: 'url_coder_get_url')]
+    public function getUrlByCode(): Response
+    {
+        return $this->render('url_coder/get-url-by-code.html.twig');
     }
 
     #[Route('/{id}', name:'url_coder_item_info', requirements: ['id' => '\d+'], methods: 'GET')]

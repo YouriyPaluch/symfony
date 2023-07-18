@@ -1,0 +1,16 @@
+{% extends 'url_coder/index.html.twig' %}
+
+{% block title %}Add new {{ parent() }}{% endblock %}
+{% block breadcrumb %}<a href="{{ path("url_coder_index") }}">{{ parent() }}</a>/Get URL by code{% endblock %}
+{% block contentContainer %}
+    <div>
+        <h1>Get URL by code</h1>
+        <form action="/url-coder/get-data" method="post">
+            <div>
+                <label for="code">Please input code:</label>
+                <input type="text" id="code" name="code">
+            </div>
+            <input class="btn btn-primary" type="submit" value="Get url">
+        </form>
+    </div>
+{% endblock %}

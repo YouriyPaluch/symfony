@@ -6,7 +6,11 @@
         <div class="page-title">
             <h1>Url-code list</h1>
 {#            ✅#}
-            <a class="btn btn-primary btn-add-new" href="{{ path('url_coder_add_new') }}">Add new code</a>
+            <div class="get-buttons">
+                <a class="btn btn-primary btn-add-new" href="{{ path('url_coder_add_new') }}">Add new code</a>
+                <a class="btn btn-primary btn-add-new" href="{{ path('url_coder_get_url') }}">Get url by code</a>
+            </div>
+
         </div>
         <table>
             <tr>
