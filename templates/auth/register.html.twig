@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{{ parent() }}{% endblock %}
+
+{% block content %}
+
+    <div class="card">
+        <h5 class="card-header info-color white-text text-center py-4">
+            <strong>Sign up</strong>
+        </h5>
+
+        <div class="card-body px-lg-5 pt-0">
+            {{ form(registrationForm) }}
+        </div>
+    </div>
+
+{% endblock %}
+
+

@@ -1,0 +1,8 @@
+{% extends 'url_coder/url-coder-base.html.twig' %}
+
+{% block title %}Codes list {{ parent() }}{% endblock %}
+{% block breadcrumb %}<a href="{{ path("url_coder_index") }}">{{ parent() }}</a>/Exception page{% endblock %}
+{% block contentContainer %}
+    <h1>Something went wrong</h1>
+    <p>{{ data }}</p>
+{% endblock %}

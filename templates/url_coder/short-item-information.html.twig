@@ -1,0 +1,14 @@
+<td>
+    <a href="{{ urlCode.url }}">{{ urlCode.url }}</a>
+</td>
+<td>{{ urlCode.code }}</td>
+<td>
+    <span id="link-to-copy-{{ urlCode.id }}">{{ app.request.getSchemeAndHttpHost() }}{{ path('url_coder_index') }}{{ urlCode.code }}</span>
+</td>
+<td>
+    <div class="action-button">
+        <button type="button" class="btn btn-success" onclick="copyText({{ urlCode.id }})">Copy</button>
+        <a class="btn btn btn-info" href="{{ path('url_coder_item_info', {id: urlCode.id }) }}">Statistic</a>
+    </div>
+
+</td>

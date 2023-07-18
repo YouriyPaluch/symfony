@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{{ parent() }}{% endblock %}
+
+{% block content %}
+
+    <div class="card">
+
+        <h5 class="card-header info-color white-text text-center py-4">
+            <strong>Sign in</strong>
+        </h5>
+
+        <div class="card-body px-lg-5 pt-0">
+
+            {% if error %}
+                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            {{ form_start(loginForm) }}
+            {{ form_row(loginForm._username) }}
+            {{ form_row(loginForm._password) }}
+
+            <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Sign
+                in
+            </button>
+            OR
+            <a href="/registration">Sign up</a>
+            {{ form_end(loginForm) }}
+        </div>
+    </div>
+
+{% endblock %}
+

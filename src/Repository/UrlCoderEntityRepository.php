@@ -32,7 +32,7 @@ class UrlCoderEntityRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(UrlCoderEntity $entity, bool $flush = false): void
+    public function remove(UrlCoderEntity $entity, bool $flush = true): void
     {
         $this->getEntityManager()->remove($entity);
 

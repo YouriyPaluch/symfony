@@ -4,7 +4,7 @@
 {% block breadcrumb %}<a href="{{ path("url_coder_index") }}">{{ parent() }}</a>/Item statistics{% endblock %}
 
 {% block contentContainer %}
-<div class="example-wrapper">
+<div>
     <h1>Statistics for {{ urlCode.url }}</h1>
     {% include 'url_coder/item-information.html.twig' %}
     <p>Link to <a href="/url-coder">Main page</a></p>

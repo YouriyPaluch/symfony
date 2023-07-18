@@ -5,14 +5,19 @@ namespace App\Coder;
 use App\Coder\Exceptions\EntityNotSaveException;
 use App\Coder\Interfaces\IUrlStorage;
 use App\Entity\UrlCoderEntity;
+use App\Entity\User;
 use App\Repository\UrlCoderEntityRepository;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class UrlStorage implements IUrlStorage
 {
     /**
      * @param UrlCoderEntityRepository $urlCodeRepo
      */
-    public function __construct(protected UrlCoderEntityRepository $urlCodeRepo)
+    public function __construct(
+        protected UrlCoderEntityRepository $urlCodeRepo,
+        protected Security $security
+    )
     {
 
     }
@@ -38,7 +43,9 @@ class UrlStorage implements IUrlStorage
      */
     public function getCodeByUrl(string $url): string
     {
-        return $this->getData(['url' => $url], 'getCode');
+        /** @var User $user */
+        $user = $this->security->getUser();
+        return $this->getData(['url' => $url, 'user' => $user], 'getCode');
     }
 
     /**

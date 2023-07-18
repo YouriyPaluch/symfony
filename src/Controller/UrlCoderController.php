@@ -6,6 +6,7 @@ use App\Coder\UrlOperator;
 use App\Entity\UrlCoderEntity;
 use App\Services\UrlService;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,26 +31,29 @@ class UrlCoderController extends AbstractController
     public function index(EntityManagerInterface $em): Response
     {
         $repo = $em->getRepository(UrlCoderEntity::class);
-        $urlCoderList = $repo->findAll();
+        $urlCoderList = $repo->findBy(['user' => $this->getUser()]);
         return $this->render('url_coder/index.html.twig', [
             'urlCodeList' => $urlCoderList
         ]);
     }
 
     #[Route('/get-data', name: 'url_coder_get_data', methods: 'POST')]
-    public function getCode(Request $request): Response
+    public function getCode(Request $request, EntityManagerInterface $em): Response
     {
         $requestData = $request->get('url') ?: $request->get('code');
         $nonUnique = (bool) $request->get(self::NON_UNIQUE);
         try {
             $data = $this->urlOperator->startApplication($requestData, $nonUnique);
-        } catch (\Exception|GuzzleException $e) {
+            $repo = $em->getRepository(UrlCoderEntity::class);
+            /** @var UrlCoderEntity $urlCoder */
+            $urlCoder = $repo->findOneBy(['code' => $data, 'user' => $this->getUser()]);
+            return $this->redirectToRoute('url_coder_item_info', ['id' => $urlCoder->getId()]);
+        } catch (\Exception|GuzzleException|\Error $e) {
             $data = $e->getMessage();
+            return $this->render('url_coder/exception-page.html.twig', [
+                'data' => $data
+            ]);
         }
-
-        return $this->render('url_coder/show-data.html.twig', [
-            'data' => $data
-        ]);
     }
 
     #[Route('/{code}', name:'url_coder_redirect_to_url', requirements: ['code' => '\w{8}'])]
@@ -78,8 +82,20 @@ class UrlCoderController extends AbstractController
         UrlCoderEntity $urlCoderEntity
     ): Response
     {
-        return $this->render('url_coder/item-statistics.html.twig', [
+        return $this->render('url_coder/long-item-information.html.twig', [
             'urlCode' => $urlCoderEntity,
         ]);
+    }
+
+    #[Route('/remove/{id}', name:'url_coder_remove', requirements: ['id' => '\d+'], methods: 'GET')]
+    public function remove(
+        int $id,
+        UrlCoderEntity $urlCoderEntity,
+        EntityManagerInterface $em
+    ): Response
+    {
+        $repo = $em->getRepository(UrlCoderEntity::class);
+        $repo->remove($urlCoderEntity);
+        return $this->redirectToRoute('url_coder_index');
     }
 }

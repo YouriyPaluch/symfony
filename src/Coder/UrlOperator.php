@@ -34,7 +34,7 @@ class UrlOperator
     {
         $this->validator->isWorking($url);
         $code = $nonUnique ? $this->encoder->generateCode($url) : $this->encoder->encode($url);
-        return 'This URL: ' . $url . ' has a code. Code: ' . $code;
+        return $code;
     }
 
     /**
@@ -43,7 +43,8 @@ class UrlOperator
      */
     public function getUrl(string $code): string
     {
-        return $this->decoder->decode($code);
+        $this->decoder->decode($code);
+        return $code;
     }
 
     /**
@@ -65,5 +66,11 @@ class UrlOperator
             }
         }
         return $result;
+    }
+
+
+    public function getAllByCriteria(array $criteria)
+    {
+        return $this->storage->getAllBycriteria($criteria);
     }
 }

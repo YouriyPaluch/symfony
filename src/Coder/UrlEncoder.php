@@ -2,9 +2,11 @@
 
 namespace App\Coder;
 
+use App\Entity\User;
 use EonX\EasyRandom\RandomGenerator;
 use App\Coder\Interfaces\IUrlEncoder;
 use App\Coder\Interfaces\IUrlStorage;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class UrlEncoder implements IUrlEncoder
 {
@@ -15,6 +17,7 @@ class UrlEncoder implements IUrlEncoder
      */
     public function __construct(
         protected IUrlStorage $storage,
+        protected Security $security,
         protected RandomGenerator $randomGenerator = new RandomGenerator(),
         protected int $lengthCode = 8
     )
@@ -48,7 +51,8 @@ class UrlEncoder implements IUrlEncoder
             ->__toString();
         $data = [
             'url' => $url,
-            'code' => $code
+            'code' => $code,
+            'user' => $this->security->getUser(),
         ];
         try {
             $this->storage->saveEntity($data);

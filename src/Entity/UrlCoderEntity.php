@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\UrlCoderEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: UrlCoderEntityRepository::class)]
 #[ORM\Table(name: 'url_codes')]
@@ -21,7 +22,11 @@ class UrlCoderEntity
         #[ORM\Column(length: 255)]
         protected string $url,
         #[ORM\Column(length: 255)]
-        protected string $code
+        protected string $code,
+        #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'urls')]
+        #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+        #[Ignore]
+        protected User $user
     ) {}
 
     public function getId(): int
@@ -41,10 +46,10 @@ class UrlCoderEntity
 
     public static function createFromArray(array $data): static
     {
-        if (!isset($data['url']) || !isset($data['code'])) {
+        if (!isset($data['url']) || !isset($data['code']) || !isset($data['user'])) {
             throw new \InvalidArgumentException();
         }
-        return new static($data['url'], $data['code']);
+        return new static($data['url'], $data['code'], $data['user']);
     }
 
     /**

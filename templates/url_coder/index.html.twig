@@ -1,17 +1,23 @@
 {% extends 'url_coder/url-coder-base.html.twig' %}
 
 {% block title %}Codes list {{ parent() }}{% endblock %}
-{% block breadcrumb %}Codes list{% endblock %}
 {% block contentContainer %}
-
-<div class="example-wrapper">
-    <h1>Url-code list✅</h1>
-    <a href="{{ path('url_coder_add_new') }}">Add new code</a>
-    <ol>
-        {% for urlCode in urlCodeList %}
-            <li>{% include 'url_coder/item-information.html.twig' %}</li>
-        {% endfor %}
-    </ol>
-
-</div>
+    <div>
+        <div class="page-title">
+            <h1>Url-code list</h1>
+{#            ✅#}
+            <a class="btn btn-primary btn-add-new" href="{{ path('url_coder_add_new') }}">Add new code</a>
+        </div>
+        <table>
+            <tr>
+                <th>URL</th>
+                <th>Code</th>
+                <th>Url for share</th>
+                <th>Action</th>
+            </tr>
+            {% for urlCode in urlCodeList %}
+                <tr>{% include 'url_coder/short-item-information.html.twig' %}</tr>
+            {% endfor %}
+        </table>
+    </div>
 {% endblock %}
