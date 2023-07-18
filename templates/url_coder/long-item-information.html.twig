@@ -5,7 +5,7 @@
 {% block contentContainer %}
     <ul>
         <li>ID: <a href="{{ path('url_coder_item_info', {id: urlCode.id }) }}">{{ urlCode.id }}</a></li>
-        <li class="url-code-url">URL: <img class="url-code-favicon" src="{{ faviconImage(urlCode.url) }}" alt="ico"> <a href="{{ urlCode.url }}">{{ urlCode.url }}</a></li>
+        <li><span class="url-code-ico">URL: <a href="{{ urlCode.url }}">{{ urlCode.url }}</a> <img class="url-code-favicon" src="{{ faviconImage(urlCode.url) }}" alt="ico"></span></li>
         <li>Code: {{ urlCode.code }}</li>
         <li>Redirection count: {{ urlCode.counter }}</li>
         <li>Url for share: <span id="link-to-copy-{{ urlCode.id }}">{{ app.request.getSchemeAndHttpHost() }}{{ path('url_coder_index') }}{{ urlCode.code }}</span></li>
