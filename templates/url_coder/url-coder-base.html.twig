@@ -63,11 +63,29 @@
 {% block content %}
     <div class="content-container">{% block contentContainer %}{% endblock %}</div>
     <script>
+        function unsecuredCopyToClipboard(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value=text;
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                alert("Copied the text: " + text);
+            } catch(err) {
+                console.error('Unable to copy to clipboard',err);
+            }
+            document.body.removeChild(textArea)
+        }
         function copyText(id) {
             let copyText = document.getElementById("link-to-copy-" + id);
             copyText.innerText;
-            navigator.clipboard.writeText(copyText.textContent);
-            alert("Copied the text: " + copyText.innerText);
+
+            if (window.isSecureContext && navigator.clipboard) {
+                navigator.clipboard.writeText(copyText.textContent);
+            } else {
+                unsecuredCopyToClipboard(copyText.textContent);
+            }
         }
     </script>
 {% endblock %}

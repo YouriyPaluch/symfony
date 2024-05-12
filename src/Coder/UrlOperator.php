@@ -33,8 +33,7 @@ class UrlOperator
     public function getCode(string $url, bool $nonUnique): string
     {
         $this->validator->isWorking($url);
-        $code = $nonUnique ? $this->encoder->generateCode($url) : $this->encoder->encode($url);
-        return $code;
+		return  $nonUnique ? $this->encoder->generateCode($url) : $this->encoder->encode($url);
     }
 
     /**

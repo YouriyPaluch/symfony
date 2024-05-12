@@ -20,7 +20,7 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
-                default_target_path: all_url_stats
+                default_target_path: url_coder_index
             logout:
                 path: app_logout
 
