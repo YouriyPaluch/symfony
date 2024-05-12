@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
+use App\Controller\Form\LoginFormType;
+use App\Controller\Form\RegistrationFormType;
 use App\Entity\User;
-use App\Form\LoginFormType;
-use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;

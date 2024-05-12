@@ -3,6 +3,7 @@
 namespace App\Coder;
 
 use App\Coder\Exceptions\DataNotFoundInDBException;
+use App\Coder\Exceptions\EntityNotSaveException;
 use App\Coder\Exceptions\NotUrlException;
 use GuzzleHttp\Exception\GuzzleException;
 use App\Coder\Interfaces\IUrlStorage;
@@ -61,7 +62,7 @@ class UrlOperator
             try {
                 $result = $this->getUrl($string);
             } catch (DataNotFoundInDBException $e) {
-                $result = 'You input invalid data. ' . $urlException->getMessage() . '; ' . $e->getMessage();
+                throw new EntityNotSaveException('You input invalid data. ' . $urlException->getMessage() . '; ' . $e->getMessage());
             }
         }
         return $result;

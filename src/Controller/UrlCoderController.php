@@ -6,6 +6,7 @@ use App\Coder\UrlOperator;
 use App\Entity\UrlCoderEntity;
 use App\Services\UrlService;
 use Doctrine\ORM\EntityManagerInterface;
+use Error;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,7 +47,7 @@ class UrlCoderController extends AbstractController
             $data = $this->urlOperator->startApplication($requestData, $nonUnique);
             $urlCoder = $this->urlService->getEntityByCode($data);
             return $this->redirectToRoute('url_coder_item_info', ['id' => $urlCoder->getId()]);
-        } catch (\Exception|GuzzleException|\Error $e) {
+        } catch (Exception|GuzzleException|Error $e) {
             $data = $e->getMessage();
             return $this->render('url_coder/exception-page.html.twig', [
                 'data' => $data

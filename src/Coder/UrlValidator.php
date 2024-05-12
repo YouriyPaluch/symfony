@@ -25,7 +25,9 @@ class UrlValidator
     public function isUrl(string $url): bool
     {
         if (empty($url) || !filter_var($url, FILTER_VALIDATE_URL)) {
-            throw new NotUrlException('Url - ' . $url . ' is invalid');
+            throw new NotUrlException('Url - ' . $url . ' is invalid.
+            Url needs to has a require elements schema of request (http or https),
+             and domain');
         }
         return true;
     }
